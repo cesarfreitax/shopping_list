@@ -5,34 +5,18 @@ class GroceryItemWidget extends StatelessWidget {
   const GroceryItemWidget({
     super.key,
     required this.item,
-    required this.onToggleItem,
+    required this.onRemoveItem,
   });
 
   final GroceryItem item;
-  final void Function(GroceryItem) onToggleItem;
+  final void Function(GroceryItem) onRemoveItem;
 
   @override
   Widget build(BuildContext context) {
     return Dismissible(
       key: ValueKey(item.id),
-      background: Container(
-        color: Theme.of(context).colorScheme.errorContainer,
-        child: const Icon(
-          Icons.delete,
-          color: Colors.white,
-        ),
-      ),
       onDismissed: (direction) {
-        onToggleItem(item);
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: const Text('An item was removed.'),
-          action: SnackBarAction(
-            label: 'Undo',
-            onPressed: () {
-              onToggleItem(item);
-            },
-          ),
-        ));
+        onRemoveItem(item);
       },
       child: ListTile(
         leading: Container(
